@@ -1,3 +1,72 @@
+# $ python -m http.server --bind 127.0.0.1 8080
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+      <link
+          rel="stylesheet"
+          data-name="vs/editor/editor.main"
+          href="./min/vs/editor/editor.main.css"
+      />
+  </head>
+  <body>
+
+      <div id="container" style="overflow: hidden; width: 100%; height: 100%; position: absolute"></div>
+
+      <script>
+          var require = { paths: { vs: './min/vs' } };
+      </script>
+      <script src="./min/vs/loader.js"></script>
+      <script src="./min/vs/editor/editor.main.nls.js"></script>
+      <script src="./min/vs/editor/editor.main.js"></script>
+
+      <script>
+          const urlParams = new URLSearchParams(window.location.search);
+
+          for (const [key, value] of urlParams) {
+              console.log(`${key}=${value}`);
+          }
+
+
+          let fileContent = null;
+
+
+          fetch(urlParams.get("context"))
+              .then(response => response.text())
+              .then(content => {
+                  // Save the content to the variable
+                  fileContent = content;
+              })
+              .catch(error => {
+                  console.error(`Error fetching and saving content: ${error}`);
+              });
+
+
+          var editor = monaco.editor.create(document.getElementById('container'), {
+              value: `${fileContent}`,
+              language: `${urlParams.get("lang")}`,
+              lineNumbers: `${urlParams.get("lineNumbers")}`,
+              theme: `${urlParams.get("theme")}`,
+              minimap: `${urlParams.get("minimap")}`,
+              background: `${urlParams.get("background")}`,
+              folding: `${urlParams.get("folding")}`,
+              javascriptDefaults: `${urlParams.get("javascriptDefaults")}`,
+              typescriptDefaults: `${urlParams.get("typescriptDefaults")}`,
+              javascriptDefaultsNoSemanticValidation: `${urlParams.get("javascriptDefaultsNoSemanticValidation")}`,
+              typescriptDefaultsNoSemanticValidation: `${urlParams.get("typescriptDefaultsNoSemanticValidation")}`,
+              javascriptDefaultsNoSyntaxValidation: `${urlParams.get("javascriptDefaultsNoSyntaxValidation")}`,
+              typescriptDefaultsNoSyntaxValidation: `${urlParams.get("typescriptDefaultsNoSyntaxValidation")}`,
+              automaticLayout: true,
+          });
+      </script>
+  </body>
+</html>
+
+```
+
+
 # Obsidian Code Files
 
 > Plugin for ObsidianMD to show and edit code files along other notes.

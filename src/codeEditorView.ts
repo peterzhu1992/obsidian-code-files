@@ -11,6 +11,10 @@ export class CodeEditorView extends TextFileView {
 
 	id = CodeEditorView.i++;
 
+	basePath = (this.app.vault.adapter as any).basePath;
+
+	baseServerPath = "http://localhost:8080";
+
 	codeEditor: ReturnType<typeof mountCodeEditor>;
 
 	initialValue: string;
@@ -43,7 +47,7 @@ export class CodeEditorView extends TextFileView {
 			this.plugin,
 			getLanguage(file.extension),
 			this.initialValue,
-			this.getContext(file),
+			`${this.baseServerPath}/${this.getContext(file)}`,
 			() => this.requestSave()
 		);
 
