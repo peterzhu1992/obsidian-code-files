@@ -48,7 +48,7 @@ export const mountCodeEditor = (
 
 	const iframe: HTMLIFrameElement = document.createElement("iframe");
 	console.log(`${queryParameters.toString()}`)
-	iframe.src = `http://localhost:8080/monaco/index.html?${queryParameters.toString()}`;
+	iframe.src = `http://127.0.0.1/index.html?${queryParameters.toString()}`;
 	// iframe.src = `https://embeddable-monaco.lukasbach.com?${queryParameters.toString()}`;
 
 	iframe.style.width = "100%";
